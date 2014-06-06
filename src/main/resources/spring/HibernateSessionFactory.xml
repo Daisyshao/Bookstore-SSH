@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+	<!-- Hibernate session factory for READ operations -->
+	<bean id="sessionFactoryRead"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+
+		<property name="dataSource">
+			<ref bean="dataSourceRead" />
+		</property>
+
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<prop key="show_sql">true</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.jdbc.batch_size">20</prop>
+			</props>
+		</property>
+
+		<!-- Mappings -->
+		<property name="mappingResources">
+			<list>
+				<value>com/dbs/bookstore/hibernate/User.hbm.xml</value>
+				<value>com/dbs/bookstore/hibernate/Book.hbm.xml</value>
+			</list>
+		</property>
+
+	</bean>
+
+	<bean id="transactionManagerRead"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+
+		<property name="sessionFactory" ref="sessionFactoryRead" />
+
+	</bean>
+
+
+	<bean id="transactionInterceptorRead"
+		class="org.springframework.transaction.interceptor.TransactionInterceptor">
+
+		<property name="transactionManager" ref="transactionManagerRead" />
+
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="find*">PROPAGATION_REQUIRED,readOnly</prop>
+			</props>
+		</property>
+
+	</bean>
+
+	<!-- Hibernate session factory for WRITE operations -->
+	<bean id="sessionFactoryWrite"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+
+		<property name="dataSource">
+			<ref bean="dataSourceWrite" />
+		</property>
+
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<prop key="show_sql">true</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.jdbc.batch_size">20</prop>
+			</props>
+		</property>
+
+		<!-- Mappings -->
+		<property name="mappingResources">
+			<list>
+			</list>
+		</property>
+
+	</bean>
+
+	<bean id="transactionManagerWrite"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+
+		<property name="sessionFactory" ref="sessionFactoryWrite" />
+
+	</bean>
+
+	<bean id="transactionInterceptorWrite"
+		class="org.springframework.transaction.interceptor.TransactionInterceptor">
+
+		<property name="transactionManager" ref="transactionManagerWrite" />
+
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+
+	</bean>
+
+</beans>

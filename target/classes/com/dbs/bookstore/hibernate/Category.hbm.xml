@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="com.dbs.bookstore.model.Category" table="t_category">
+		<id name="categoryId" type="int">
+			<column name="id" />
+			<generator class="native" />
+		</id>
+		<set name="books">
+        <key column="category_id" 
+            not-null="true"/>
+        <one-to-many class="com.dbs.model.bookstore.Book"/>
+    	</set>
+		<property name="title" type="string">
+			<column name="title" length="20" not-null="true" />
+		</property>
+	</class>
+</hibernate-mapping>

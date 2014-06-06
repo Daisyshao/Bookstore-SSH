@@ -1,0 +1,34 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location">
+			<value>WEB-INF/classes/database.properties</value>
+		</property>
+	</bean>
+
+	<bean id="dataSourceRead" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClassName" value="${jdbc.read.driverClassName}" />
+		<property name="url" value="${jdbc.read.url}" />
+		<property name="username" value="${jdbc.read.username}" />
+		<property name="password" value="${jdbc.read.password}" />
+		<property name="maxPoolSize" value="${jdbc.read.maxPoolSize}" />
+		<property name="minPoolSize" value="${jdbc.read.minPoolSize}" />
+		<property name="initialPoolSize" value="${jdbc.read.initialPoolSize}" />
+		<property name="maxIdleTime" value="${jdbc.read.maxIdleTime}" />
+	</bean>
+
+	<bean id="dataSourceWrite" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClassName" value="${jdbc.write.driverClassName}" />
+		<property name="url" value="${jdbc.write.url}" />
+		<property name="username" value="${jdbc.write.username}" />
+		<property name="password" value="${jdbc.write.password}" />
+		<property name="maxPoolSize" value="${jdbc.write.maxPoolSize}" />
+		<property name="minPoolSize" value="${jdbc.write.minPoolSize}" />
+		<property name="initialPoolSize" value="${jdbc.write.initialPoolSize}" />
+		<property name="maxIdleTime" value="${jdbc.write.maxIdleTime}" />
+	</bean>
+
+</beans>

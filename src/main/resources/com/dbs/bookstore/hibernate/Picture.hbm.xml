@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="com.dbs.bookstore.model.Picture" table="t_picture">
+		<id name="pictureId" type="int">
+			<column name="id" />
+			<generator class="native" />
+		</id>
+		<property name="book_id" type="int">
+			<column name="book_id" not-null="true" />
+		</property>
+		<property name="title" type="String">
+			<column name="title" length="255" not-null="true" />
+		</property>
+		<property name="filenaem" type="String">
+			<column name="filename" length="255" not-null="true" />
+		</property>
+	</class>
+</hibernate-mapping>
