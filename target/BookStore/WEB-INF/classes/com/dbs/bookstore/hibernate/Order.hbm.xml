@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="com.dbs.bookstore.model.Order" table="t_order">
+		<id name="orderId" type="int">
+			<column name="id" />
+			<generator class="native" />
+		</id>
+		<property name="time" type="Date">
+			<column name="time" not-null="true" />
+		</property>
+		<property name="total_price" type="float">
+			<column name="total_price" not-null="true" />
+		</property>
+		<property name="status" type="int">
+			<column name="status" not-null="true" />
+		</property>
+		<property name="payment" type="int">
+			<column name="payment" not-null="true" />
+		</property>
+		<many-to-one name="user_id" 
+        column="user_id" 
+        not-null="true"/>   <!-- many-to-one -->
+        <many-to-one name="address_id" 
+        column="address_id" 
+        unique="true"
+        not-null="true"/>   <!-- one-to-one -->
+        <set name="order_details" inverse="true">
+            <key>
+                <column name="t_o_id" />
+            </key>
+            <one-to-many class="com.dbs.bookstore.model.Order_detail" />
+        </set>
+	</class>
+</hibernate-mapping>

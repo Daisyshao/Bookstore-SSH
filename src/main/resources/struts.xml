@@ -11,5 +11,10 @@
 		<action name="index">
 			<result>/index.jsp</result>
 		</action>
+		<action name="login" class="loginAction">
+			<result name="success">/login_success.jsp</result>
+			<result name="error">/login.jsp</result>
+		</action>
+		
 	</package>
 </struts>

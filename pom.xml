@@ -66,9 +66,9 @@
 				<server>tomcat</server>
 				<username>admin</username>
 				<password>123456</password>
-				<url>http://localhost:8080/manager/text</url>
+				<url>http://localhost:8080</url>
 				<path>/BookStore</path>
-				</configuration>
+			</configuration>
 			</plugin>
 		</plugins>
 	</build>

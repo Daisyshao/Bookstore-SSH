@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+      xmlns="http://www.springframework.org/schema/beans"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:aop="http://www.springframework.org/schema/aop"
+      xmlns:tx="http://www.springframework.org/schema/tx"
+      xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+
+	<!-- 定义数据源 -->
+	<bean id="dataSource"
+		class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName"
+			value="com.mysql.jdbc.Driver">
+		</property>
+		<property name="url"
+			value="jdbc:mysql://localhost:3306/bookstore">
+		</property>
+		<property name="username" value="root"></property>
+		<property name="password" value="123456"></property>
+	</bean>
+	<!-- 定义使用hibernate -->
+	<bean id="sessionFactory"	
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.MySQLDialect
+				</prop>
+				<prop key="hibernate.show_sql">true</prop>
+			</props>
+		</property>
+		<!-- 定义映射的文件 -->
+		<property name="mappingResources">
+			<list>
+				<value>com/dbs/bookstore/hibernate/User.hbm.xml</value>
+				<value>com/dbs/bookstore/hibernate/Book.hbm.xml</value>
+				<value>com/dbs/bookstore/hibernate/Address.hbm.xml</value>
+				<value>com/dbs/bookstore/hibernate/Author.hbm.xml</value>
+				<value>com/dbs/bookstore/hibernate/Category.hbm.xml</value>
+				<value>com/dbs/bookstore/hibernate/City.hbm.xml</value>
+				<value>com/dbs/bookstore/hibernate/Description.hbm.xml</value>
+				<value>com/dbs/bookstore/hibernate/Order_detail.hbm.xml</value>
+				<value>com/dbs/bookstore/hibernate/Order.hbm.xml</value>
+				<value>com/dbs/bookstore/hibernate/Picture.hbm.xml</value>
+				<value>com/dbs/bookstore/hibernate/Province.hbm.xml</value>
+				<value>com/dbs/bookstore/hibernate/Publisher.hbm.xml</value>
+				</list>
+		</property>
+	</bean>
+	<!-- 配置事务管理器 -->
+	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+    	<property name="sessionFactory">
+    		<ref bean="sessionFactory"/>
+    	</property>
+ 	</bean>
+	<!-- 配置事务的传播特性 -->  
+ 	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+   		<tx:attributes>
+    		<tx:method name="find*" propagation="REQUIRED"/>
+    		<tx:method name="save*" propagation="REQUIRED"/>
+    		<tx:method name="del*" propagation="REQUIRED"/>
+    		<tx:method name="modify*" propagation="REQUIRED"/>
+   			<tx:method name="update*" propagation="REQUIRED"/>
+    		<tx:method name="*" propagation="REQUIRED"/>
+   		</tx:attributes>
+  	</tx:advice>
+  	<!-- 配置哪些类的哪些方法参与事务 -->  
+  	<aop:config>
+   		<aop:pointcut id="allManagerMethod" expression="execution(* com.dbs.bookstore.*.*.*(..))"/>
+  		<aop:advisor pointcut-ref="allManagerMethod" advice-ref="txAdvice"/>
+  	</aop:config>
+  	<!-- 将业务逻辑对象通过spring注入到Action中，从而避免了在Action类中的直接代码查询 -->
+ 	<bean id="loginService"  class="com.dbs.bookstore.service.LoginServiceImpl">
+  		<property name="sessionFactory" ref="sessionFactory"></property>
+ 	</bean>
+ 	<bean name="/login" class="com.dbs.bookstore.action.Login" scope="prototype">
+   		<property name="loginService" ref="loginService"></property>
+ 	</bean>
+	
+	</beans>

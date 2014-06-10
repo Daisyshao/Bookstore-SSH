@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="com.dbs.bookstore.model.Order_detail" table="order_detail">
+		<id name="orderDetailId" type="int">
+			<column name="id" />
+			<generator class="native" />
+		</id>
+		<property name="price" type="float">
+			<column name="price" not-null="true" />
+		</property>
+		<property name="count" type="int">
+			<column name="count" not-null="true" />
+		</property>
+		<many-to-one name="t_o_id" 
+        column="t_o_id" 
+        not-null="true"/>
+        <many-to-one name="t_b_id" 
+        column="t_b_id" 
+        not-null="true"/>
+	</class>
+</hibernate-mapping>

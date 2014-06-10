@@ -25,6 +25,16 @@
 			<list>
 				<value>com/dbs/bookstore/hibernate/User.hbm.xml</value>
 				<value>com/dbs/bookstore/hibernate/Book.hbm.xml</value>
+				<value>com/dbs/bookstore/hibernate/Address.hbm.xml</value>
+				<value>com/dbs/bookstore/hibernate/Author.hbm.xml</value>
+				<value>com/dbs/bookstore/hibernate/Category.hbm.xml</value>
+				<value>com/dbs/bookstore/hibernate/City.hbm.xml</value>
+				<value>com/dbs/bookstore/hibernate/Description.hbm.xml</value>
+				<value>com/dbs/bookstore/hibernate/Order_detail.hbm.xml</value>
+				<value>com/dbs/bookstore/hibernate/Order.hbm.xml</value>
+				<value>com/dbs/bookstore/hibernate/Picture.hbm.xml</value>
+				<value>com/dbs/bookstore/hibernate/Province.hbm.xml</value>
+				<value>com/dbs/bookstore/hibernate/Publisher.hbm.xml</value>
 			</list>
 		</property>
 

@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="com.dbs.bookstore.model.Book" table="t_book">
+		<id name="bookId" type="int">
+			<column name="id" />
+			<generator class="native" />
+		</id>
+		<set name="descriptions" inverse="true">
+        <key column="book_id" 
+            not-null="true"/>
+        <one-to-many class="com.dbs.bookstore.model.Decription"/>
+   		</set>
+   		<set name="pictures" inverse="true">
+        <key column="book_id" 
+            not-null="true"/>
+        <one-to-many class="com.dbs.bookstore.model.Picture"/>
+   		</set>
+		<property name="title" type="string">
+			<column name="title" length="20" not-null="true" />
+		</property>
+		<property name="ISBN" type="string">
+			<column name="ISBN" length="20" not-null="true" />
+		</property>
+		<property name="price" type="float">
+			<column name="float" not-null="true" />
+		</property>
+		<property name="stock" type="int">
+			<column name="stock" not-null="true" />
+		</property>
+		<property name="discount" type="float">
+			<column name="discount" not-null="true" />
+		</property>
+		<many-to-one name="category_id" 
+        column="category_id" 
+        not-null="true"/>
+		<many-to-one name="author_id" 
+        column="author_id" 
+        not-null="true"/>
+		<many-to-one name="publisher_id" 
+        column="publisher_id" 
+        not-null="true"/>
+		<property name="publish_time" type="Date">
+			<column name="publish_time" not-null="true" />
+		</property>
+		<property name="add_time" type="Date">
+			<column name="add_time" not-null="true" />
+		</property>
+		<set name="order_details" inverse="true">
+            <key>
+                <column name="t_b_id" />
+            </key>
+            <one-to-many class="com.dbs.bookstore.model.Order_detail" />
+        </set>
+	</class>
+</hibernate-mapping>
